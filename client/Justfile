@@ -1,12 +1,5 @@
 
-folder := 'app/api/pb/'
-
 gen-api:
-    protoc \
-        --ts_out={{folder}} \
-        --ts_opt "server_none" \
-         --proto_path=.. \
-         ../naniue.proto
-    cd {{folder}}; mv naniue.client.ts naniue-client.ts
+    buf generate
 
     

@@ -2,27 +2,28 @@ syntax = "proto3";
 package naniue;
 // option go_package = "../naniue.proto;naniue";
 
+
+import "google/protobuf/timestamp.proto";
+
 message Empty{}
 
 service Wpp {
-  rpc Login(LoginReq) returns (LoginRes);
-  rpc GetContacts(BaseReq) returns (Contacts);
-  rpc GetContact(GetContactReq) returns (Contact);
+  rpc Login(Empty) returns (LoginRes);
+  rpc GetChats(Empty) returns (Chats);
+  rpc GetChat(GetById) returns (Chat);
+  rpc GetContacts(Empty) returns (Contacts);
+  rpc GetContact(GetById) returns (Contact);
+
   rpc SendMessage(SendMessageReq) returns (Empty);
-  rpc SubscribeMessages(BaseReq) returns (stream Message);
+  rpc SubscribeMessages(Empty) returns (stream Message);
 }
 
-message BaseReq {
-  string user_pn = 1;
+message Chats {
+  repeated Chat chats=1;
 }
 
-message Contacts {
-  repeated Contact contacts=1;
-}
-
-message GetContactReq {
-  BaseReq base = 1;
-  string contact = 2;
+message GetById {
+  string id = 1;
 }
 
 enum AuthMethod {
@@ -45,27 +46,37 @@ message LoginRes {
     Empty alive = 3;
   }
 }
-
-message LoginReq {
-  BaseReq base = 1;
+message Contacts {
+  repeated Contact contacts=1;
 }
 
-
 message Contact {
-  string name=1;
-  string pn=2;
-  string jid=3;
+  string name = 1;
+  string picture_url=2;
+  string jid = 3;
+}
+
+message Chat {
+  string name = 1;
+  uint32 unread_count = 2;
+  google.protobuf.Timestamp last_msg_timestamp = 3;
+  bool archived = 4;
+  uint32 pinned = 5;
+  string contact_jid = 6;
+  string picture_url=7;
 }
 
 message SendMessageReq {
-  BaseReq base=1;
-  string to_jid=2;
-  string message=3;
+  string to_jid=1;
+  string message=2;
 }
 
 message Message {
-  string from_jid=1;
-  string chat_id=2;
-  string message=3;
-  bool is_forwarded=4;
+  string id = 1;
+  string sender_jid=2;
+  string chat_id=3;
+  string message=4;
+  bool is_forwarded=5;
+  bool from_me=6;
+  google.protobuf.Timestamp Timestamp = 7;
 }

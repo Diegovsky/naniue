@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ComponentProps } from "react";
 import { Filters, type Chat, type Contact, type Profile } from "types";
 import { Client } from "~/api/client";
 import { useAsync } from "~/utils";
@@ -30,7 +30,7 @@ export interface Contacts {
 }
 
 export interface App {
-	client: Client;
+	readonly client: Client;
 	Chats: Chats;
 	Contacts: Contacts;
 	Profile: Profile;
@@ -46,8 +46,13 @@ export function useApp(): App {
 	return app;
 }
 
-export function AppProvider({ children }) {
-	const client = useMemo(() => new Client(), []);
+export function AppProvider({ children }: ComponentProps<any>) {
+	const clientRef = useRef<null|Client>(null);
+	if(clientRef.current === null) {
+		clientRef.current = new Client()
+	}
+	const client = clientRef.current
+
 	const [winOpen, setWinOpen] = useState(false);
 	const [currentChat, setCurrentChat] = useState<Chat | null>(null);
 

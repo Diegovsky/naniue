@@ -34,6 +34,10 @@ const (
 const (
 	// WppLoginProcedure is the fully-qualified name of the Wpp's Login RPC.
 	WppLoginProcedure = "/naniue.Wpp/Login"
+	// WppGetChatsProcedure is the fully-qualified name of the Wpp's GetChats RPC.
+	WppGetChatsProcedure = "/naniue.Wpp/GetChats"
+	// WppGetChatProcedure is the fully-qualified name of the Wpp's GetChat RPC.
+	WppGetChatProcedure = "/naniue.Wpp/GetChat"
 	// WppGetContactsProcedure is the fully-qualified name of the Wpp's GetContacts RPC.
 	WppGetContactsProcedure = "/naniue.Wpp/GetContacts"
 	// WppGetContactProcedure is the fully-qualified name of the Wpp's GetContact RPC.
@@ -46,11 +50,13 @@ const (
 
 // WppClient is a client for the naniue.Wpp service.
 type WppClient interface {
-	Login(context.Context, *LoginReq) (*LoginRes, error)
-	GetContacts(context.Context, *BaseReq) (*Contacts, error)
-	GetContact(context.Context, *GetContactReq) (*Contact, error)
+	Login(context.Context, *Empty) (*LoginRes, error)
+	GetChats(context.Context, *Empty) (*Chats, error)
+	GetChat(context.Context, *GetById) (*Chat, error)
+	GetContacts(context.Context, *Empty) (*Contacts, error)
+	GetContact(context.Context, *GetById) (*Contact, error)
 	SendMessage(context.Context, *SendMessageReq) (*Empty, error)
-	SubscribeMessages(context.Context, *BaseReq) (*connect.ServerStreamForClient[Message], error)
+	SubscribeMessages(context.Context, *Empty) (*connect.ServerStreamForClient[Message], error)
 }
 
 // NewWppClient constructs a client for the naniue.Wpp service. By default, it uses the Connect
@@ -64,19 +70,31 @@ func NewWppClient(httpClient connect.HTTPClient, baseURL string, opts ...connect
 	baseURL = strings.TrimRight(baseURL, "/")
 	wppMethods := File_naniue_proto.Services().ByName("Wpp").Methods()
 	return &wppClient{
-		login: connect.NewClient[LoginReq, LoginRes](
+		login: connect.NewClient[Empty, LoginRes](
 			httpClient,
 			baseURL+WppLoginProcedure,
 			connect.WithSchema(wppMethods.ByName("Login")),
 			connect.WithClientOptions(opts...),
 		),
-		getContacts: connect.NewClient[BaseReq, Contacts](
+		getChats: connect.NewClient[Empty, Chats](
+			httpClient,
+			baseURL+WppGetChatsProcedure,
+			connect.WithSchema(wppMethods.ByName("GetChats")),
+			connect.WithClientOptions(opts...),
+		),
+		getChat: connect.NewClient[GetById, Chat](
+			httpClient,
+			baseURL+WppGetChatProcedure,
+			connect.WithSchema(wppMethods.ByName("GetChat")),
+			connect.WithClientOptions(opts...),
+		),
+		getContacts: connect.NewClient[Empty, Contacts](
 			httpClient,
 			baseURL+WppGetContactsProcedure,
 			connect.WithSchema(wppMethods.ByName("GetContacts")),
 			connect.WithClientOptions(opts...),
 		),
-		getContact: connect.NewClient[GetContactReq, Contact](
+		getContact: connect.NewClient[GetById, Contact](
 			httpClient,
 			baseURL+WppGetContactProcedure,
 			connect.WithSchema(wppMethods.ByName("GetContact")),
@@ -88,7 +106,7 @@ func NewWppClient(httpClient connect.HTTPClient, baseURL string, opts ...connect
 			connect.WithSchema(wppMethods.ByName("SendMessage")),
 			connect.WithClientOptions(opts...),
 		),
-		subscribeMessages: connect.NewClient[BaseReq, Message](
+		subscribeMessages: connect.NewClient[Empty, Message](
 			httpClient,
 			baseURL+WppSubscribeMessagesProcedure,
 			connect.WithSchema(wppMethods.ByName("SubscribeMessages")),
@@ -99,15 +117,17 @@ func NewWppClient(httpClient connect.HTTPClient, baseURL string, opts ...connect
 
 // wppClient implements WppClient.
 type wppClient struct {
-	login             *connect.Client[LoginReq, LoginRes]
-	getContacts       *connect.Client[BaseReq, Contacts]
-	getContact        *connect.Client[GetContactReq, Contact]
+	login             *connect.Client[Empty, LoginRes]
+	getChats          *connect.Client[Empty, Chats]
+	getChat           *connect.Client[GetById, Chat]
+	getContacts       *connect.Client[Empty, Contacts]
+	getContact        *connect.Client[GetById, Contact]
 	sendMessage       *connect.Client[SendMessageReq, Empty]
-	subscribeMessages *connect.Client[BaseReq, Message]
+	subscribeMessages *connect.Client[Empty, Message]
 }
 
 // Login calls naniue.Wpp.Login.
-func (c *wppClient) Login(ctx context.Context, req *LoginReq) (*LoginRes, error) {
+func (c *wppClient) Login(ctx context.Context, req *Empty) (*LoginRes, error) {
 	response, err := c.login.CallUnary(ctx, connect.NewRequest(req))
 	if response != nil {
 		return response.Msg, err
@@ -115,8 +135,26 @@ func (c *wppClient) Login(ctx context.Context, req *LoginReq) (*LoginRes, error)
 	return nil, err
 }
 
+// GetChats calls naniue.Wpp.GetChats.
+func (c *wppClient) GetChats(ctx context.Context, req *Empty) (*Chats, error) {
+	response, err := c.getChats.CallUnary(ctx, connect.NewRequest(req))
+	if response != nil {
+		return response.Msg, err
+	}
+	return nil, err
+}
+
+// GetChat calls naniue.Wpp.GetChat.
+func (c *wppClient) GetChat(ctx context.Context, req *GetById) (*Chat, error) {
+	response, err := c.getChat.CallUnary(ctx, connect.NewRequest(req))
+	if response != nil {
+		return response.Msg, err
+	}
+	return nil, err
+}
+
 // GetContacts calls naniue.Wpp.GetContacts.
-func (c *wppClient) GetContacts(ctx context.Context, req *BaseReq) (*Contacts, error) {
+func (c *wppClient) GetContacts(ctx context.Context, req *Empty) (*Contacts, error) {
 	response, err := c.getContacts.CallUnary(ctx, connect.NewRequest(req))
 	if response != nil {
 		return response.Msg, err
@@ -125,7 +163,7 @@ func (c *wppClient) GetContacts(ctx context.Context, req *BaseReq) (*Contacts, e
 }
 
 // GetContact calls naniue.Wpp.GetContact.
-func (c *wppClient) GetContact(ctx context.Context, req *GetContactReq) (*Contact, error) {
+func (c *wppClient) GetContact(ctx context.Context, req *GetById) (*Contact, error) {
 	response, err := c.getContact.CallUnary(ctx, connect.NewRequest(req))
 	if response != nil {
 		return response.Msg, err
@@ -143,17 +181,19 @@ func (c *wppClient) SendMessage(ctx context.Context, req *SendMessageReq) (*Empt
 }
 
 // SubscribeMessages calls naniue.Wpp.SubscribeMessages.
-func (c *wppClient) SubscribeMessages(ctx context.Context, req *BaseReq) (*connect.ServerStreamForClient[Message], error) {
+func (c *wppClient) SubscribeMessages(ctx context.Context, req *Empty) (*connect.ServerStreamForClient[Message], error) {
 	return c.subscribeMessages.CallServerStream(ctx, connect.NewRequest(req))
 }
 
 // WppHandler is an implementation of the naniue.Wpp service.
 type WppHandler interface {
-	Login(context.Context, *LoginReq) (*LoginRes, error)
-	GetContacts(context.Context, *BaseReq) (*Contacts, error)
-	GetContact(context.Context, *GetContactReq) (*Contact, error)
+	Login(context.Context, *Empty) (*LoginRes, error)
+	GetChats(context.Context, *Empty) (*Chats, error)
+	GetChat(context.Context, *GetById) (*Chat, error)
+	GetContacts(context.Context, *Empty) (*Contacts, error)
+	GetContact(context.Context, *GetById) (*Contact, error)
 	SendMessage(context.Context, *SendMessageReq) (*Empty, error)
-	SubscribeMessages(context.Context, *BaseReq, *connect.ServerStream[Message]) error
+	SubscribeMessages(context.Context, *Empty, *connect.ServerStream[Message]) error
 }
 
 // NewWppHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -167,6 +207,18 @@ func NewWppHandler(svc WppHandler, opts ...connect.HandlerOption) (string, http.
 		WppLoginProcedure,
 		svc.Login,
 		connect.WithSchema(wppMethods.ByName("Login")),
+		connect.WithHandlerOptions(opts...),
+	)
+	wppGetChatsHandler := connect.NewUnaryHandlerSimple(
+		WppGetChatsProcedure,
+		svc.GetChats,
+		connect.WithSchema(wppMethods.ByName("GetChats")),
+		connect.WithHandlerOptions(opts...),
+	)
+	wppGetChatHandler := connect.NewUnaryHandlerSimple(
+		WppGetChatProcedure,
+		svc.GetChat,
+		connect.WithSchema(wppMethods.ByName("GetChat")),
 		connect.WithHandlerOptions(opts...),
 	)
 	wppGetContactsHandler := connect.NewUnaryHandlerSimple(
@@ -197,6 +249,10 @@ func NewWppHandler(svc WppHandler, opts ...connect.HandlerOption) (string, http.
 		switch r.URL.Path {
 		case WppLoginProcedure:
 			wppLoginHandler.ServeHTTP(w, r)
+		case WppGetChatsProcedure:
+			wppGetChatsHandler.ServeHTTP(w, r)
+		case WppGetChatProcedure:
+			wppGetChatHandler.ServeHTTP(w, r)
 		case WppGetContactsProcedure:
 			wppGetContactsHandler.ServeHTTP(w, r)
 		case WppGetContactProcedure:
@@ -214,15 +270,23 @@ func NewWppHandler(svc WppHandler, opts ...connect.HandlerOption) (string, http.
 // UnimplementedWppHandler returns CodeUnimplemented from all methods.
 type UnimplementedWppHandler struct{}
 
-func (UnimplementedWppHandler) Login(context.Context, *LoginReq) (*LoginRes, error) {
+func (UnimplementedWppHandler) Login(context.Context, *Empty) (*LoginRes, error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.Login is not implemented"))
 }
 
-func (UnimplementedWppHandler) GetContacts(context.Context, *BaseReq) (*Contacts, error) {
+func (UnimplementedWppHandler) GetChats(context.Context, *Empty) (*Chats, error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.GetChats is not implemented"))
+}
+
+func (UnimplementedWppHandler) GetChat(context.Context, *GetById) (*Chat, error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.GetChat is not implemented"))
+}
+
+func (UnimplementedWppHandler) GetContacts(context.Context, *Empty) (*Contacts, error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.GetContacts is not implemented"))
 }
 
-func (UnimplementedWppHandler) GetContact(context.Context, *GetContactReq) (*Contact, error) {
+func (UnimplementedWppHandler) GetContact(context.Context, *GetById) (*Contact, error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.GetContact is not implemented"))
 }
 
@@ -230,6 +294,6 @@ func (UnimplementedWppHandler) SendMessage(context.Context, *SendMessageReq) (*E
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.SendMessage is not implemented"))
 }
 
-func (UnimplementedWppHandler) SubscribeMessages(context.Context, *BaseReq, *connect.ServerStream[Message]) error {
+func (UnimplementedWppHandler) SubscribeMessages(context.Context, *Empty, *connect.ServerStream[Message]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("naniue.Wpp.SubscribeMessages is not implemented"))
 }

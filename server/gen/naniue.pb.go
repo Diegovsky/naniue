@@ -9,6 +9,7 @@ package gen
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	unsafe "unsafe"
 )
@@ -101,27 +102,27 @@ func (b0 Empty_builder) Build() *Empty {
 	return m0
 }
 
-type BaseReq struct {
-	state             protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_UserPn string                 `protobuf:"bytes,1,opt,name=user_pn,json=userPn,proto3"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+type Chats struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Chats *[]*Chat               `protobuf:"bytes,1,rep,name=chats,proto3"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
-func (x *BaseReq) Reset() {
-	*x = BaseReq{}
+func (x *Chats) Reset() {
+	*x = Chats{}
 	mi := &file_naniue_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BaseReq) String() string {
+func (x *Chats) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BaseReq) ProtoMessage() {}
+func (*Chats) ProtoMessage() {}
 
-func (x *BaseReq) ProtoReflect() protoreflect.Message {
+func (x *Chats) ProtoReflect() protoreflect.Message {
 	mi := &file_naniue_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -133,52 +134,54 @@ func (x *BaseReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-func (x *BaseReq) GetUserPn() string {
+func (x *Chats) GetChats() []*Chat {
 	if x != nil {
-		return x.xxx_hidden_UserPn
+		if x.xxx_hidden_Chats != nil {
+			return *x.xxx_hidden_Chats
+		}
 	}
-	return ""
+	return nil
 }
 
-func (x *BaseReq) SetUserPn(v string) {
-	x.xxx_hidden_UserPn = v
+func (x *Chats) SetChats(v []*Chat) {
+	x.xxx_hidden_Chats = &v
 }
 
-type BaseReq_builder struct {
+type Chats_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	UserPn string
+	Chats []*Chat
 }
 
-func (b0 BaseReq_builder) Build() *BaseReq {
-	m0 := &BaseReq{}
+func (b0 Chats_builder) Build() *Chats {
+	m0 := &Chats{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.xxx_hidden_UserPn = b.UserPn
+	x.xxx_hidden_Chats = &b.Chats
 	return m0
 }
 
-type Contacts struct {
-	state               protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Contacts *[]*Contact            `protobuf:"bytes,1,rep,name=contacts,proto3"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+type GetById struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Contacts) Reset() {
-	*x = Contacts{}
+func (x *GetById) Reset() {
+	*x = GetById{}
 	mi := &file_naniue_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Contacts) String() string {
+func (x *GetById) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Contacts) ProtoMessage() {}
+func (*GetById) ProtoMessage() {}
 
-func (x *Contacts) ProtoReflect() protoreflect.Message {
+func (x *GetById) ProtoReflect() protoreflect.Message {
 	mi := &file_naniue_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -190,112 +193,28 @@ func (x *Contacts) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-func (x *Contacts) GetContacts() []*Contact {
+func (x *GetById) GetId() string {
 	if x != nil {
-		if x.xxx_hidden_Contacts != nil {
-			return *x.xxx_hidden_Contacts
-		}
-	}
-	return nil
-}
-
-func (x *Contacts) SetContacts(v []*Contact) {
-	x.xxx_hidden_Contacts = &v
-}
-
-type Contacts_builder struct {
-	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
-
-	Contacts []*Contact
-}
-
-func (b0 Contacts_builder) Build() *Contacts {
-	m0 := &Contacts{}
-	b, x := &b0, m0
-	_, _ = b, x
-	x.xxx_hidden_Contacts = &b.Contacts
-	return m0
-}
-
-type GetContactReq struct {
-	state              protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Base    *BaseReq               `protobuf:"bytes,1,opt,name=base,proto3"`
-	xxx_hidden_Contact string                 `protobuf:"bytes,2,opt,name=contact,proto3"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *GetContactReq) Reset() {
-	*x = GetContactReq{}
-	mi := &file_naniue_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetContactReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetContactReq) ProtoMessage() {}
-
-func (x *GetContactReq) ProtoReflect() protoreflect.Message {
-	mi := &file_naniue_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-func (x *GetContactReq) GetBase() *BaseReq {
-	if x != nil {
-		return x.xxx_hidden_Base
-	}
-	return nil
-}
-
-func (x *GetContactReq) GetContact() string {
-	if x != nil {
-		return x.xxx_hidden_Contact
+		return x.xxx_hidden_Id
 	}
 	return ""
 }
 
-func (x *GetContactReq) SetBase(v *BaseReq) {
-	x.xxx_hidden_Base = v
+func (x *GetById) SetId(v string) {
+	x.xxx_hidden_Id = v
 }
 
-func (x *GetContactReq) SetContact(v string) {
-	x.xxx_hidden_Contact = v
-}
-
-func (x *GetContactReq) HasBase() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_Base != nil
-}
-
-func (x *GetContactReq) ClearBase() {
-	x.xxx_hidden_Base = nil
-}
-
-type GetContactReq_builder struct {
+type GetById_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Base    *BaseReq
-	Contact string
+	Id string
 }
 
-func (b0 GetContactReq_builder) Build() *GetContactReq {
-	m0 := &GetContactReq{}
+func (b0 GetById_builder) Build() *GetById {
+	m0 := &GetById{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.xxx_hidden_Base = b.Base
-	x.xxx_hidden_Contact = b.Contact
+	x.xxx_hidden_Id = b.Id
 	return m0
 }
 
@@ -309,7 +228,7 @@ type AuthCode struct {
 
 func (x *AuthCode) Reset() {
 	*x = AuthCode{}
-	mi := &file_naniue_proto_msgTypes[4]
+	mi := &file_naniue_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -321,7 +240,7 @@ func (x *AuthCode) String() string {
 func (*AuthCode) ProtoMessage() {}
 
 func (x *AuthCode) ProtoReflect() protoreflect.Message {
-	mi := &file_naniue_proto_msgTypes[4]
+	mi := &file_naniue_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -379,7 +298,7 @@ type Error struct {
 
 func (x *Error) Reset() {
 	*x = Error{}
-	mi := &file_naniue_proto_msgTypes[5]
+	mi := &file_naniue_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -391,7 +310,7 @@ func (x *Error) String() string {
 func (*Error) ProtoMessage() {}
 
 func (x *Error) ProtoReflect() protoreflect.Message {
-	mi := &file_naniue_proto_msgTypes[5]
+	mi := &file_naniue_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -436,7 +355,7 @@ type LoginRes struct {
 
 func (x *LoginRes) Reset() {
 	*x = LoginRes{}
-	mi := &file_naniue_proto_msgTypes[6]
+	mi := &file_naniue_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -448,7 +367,7 @@ func (x *LoginRes) String() string {
 func (*LoginRes) ProtoMessage() {}
 
 func (x *LoginRes) ProtoReflect() protoreflect.Message {
-	mi := &file_naniue_proto_msgTypes[6]
+	mi := &file_naniue_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -613,7 +532,7 @@ func (b0 LoginRes_builder) Build() *LoginRes {
 type case_LoginRes_Result protoreflect.FieldNumber
 
 func (x case_LoginRes_Result) String() string {
-	md := file_naniue_proto_msgTypes[6].Descriptor()
+	md := file_naniue_proto_msgTypes[5].Descriptor()
 	if x == 0 {
 		return "not set"
 	}
@@ -642,28 +561,28 @@ func (*loginRes_Error) isLoginRes_Result() {}
 
 func (*loginRes_Alive) isLoginRes_Result() {}
 
-type LoginReq struct {
-	state           protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Base *BaseReq               `protobuf:"bytes,1,opt,name=base,proto3"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+type Contacts struct {
+	state               protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Contacts *[]*Contact            `protobuf:"bytes,1,rep,name=contacts,proto3"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
-func (x *LoginReq) Reset() {
-	*x = LoginReq{}
-	mi := &file_naniue_proto_msgTypes[7]
+func (x *Contacts) Reset() {
+	*x = Contacts{}
+	mi := &file_naniue_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *LoginReq) String() string {
+func (x *Contacts) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*LoginReq) ProtoMessage() {}
+func (*Contacts) ProtoMessage() {}
 
-func (x *LoginReq) ProtoReflect() protoreflect.Message {
-	mi := &file_naniue_proto_msgTypes[7]
+func (x *Contacts) ProtoReflect() protoreflect.Message {
+	mi := &file_naniue_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -674,54 +593,45 @@ func (x *LoginReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-func (x *LoginReq) GetBase() *BaseReq {
+func (x *Contacts) GetContacts() []*Contact {
 	if x != nil {
-		return x.xxx_hidden_Base
+		if x.xxx_hidden_Contacts != nil {
+			return *x.xxx_hidden_Contacts
+		}
 	}
 	return nil
 }
 
-func (x *LoginReq) SetBase(v *BaseReq) {
-	x.xxx_hidden_Base = v
+func (x *Contacts) SetContacts(v []*Contact) {
+	x.xxx_hidden_Contacts = &v
 }
 
-func (x *LoginReq) HasBase() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_Base != nil
-}
-
-func (x *LoginReq) ClearBase() {
-	x.xxx_hidden_Base = nil
-}
-
-type LoginReq_builder struct {
+type Contacts_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Base *BaseReq
+	Contacts []*Contact
 }
 
-func (b0 LoginReq_builder) Build() *LoginReq {
-	m0 := &LoginReq{}
+func (b0 Contacts_builder) Build() *Contacts {
+	m0 := &Contacts{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.xxx_hidden_Base = b.Base
+	x.xxx_hidden_Contacts = &b.Contacts
 	return m0
 }
 
 type Contact struct {
-	state           protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Name string                 `protobuf:"bytes,1,opt,name=name,proto3"`
-	xxx_hidden_Pn   string                 `protobuf:"bytes,2,opt,name=pn,proto3"`
-	xxx_hidden_Jid  string                 `protobuf:"bytes,3,opt,name=jid,proto3"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                 protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Name       string                 `protobuf:"bytes,1,opt,name=name,proto3"`
+	xxx_hidden_PictureUrl string                 `protobuf:"bytes,2,opt,name=picture_url,json=pictureUrl,proto3"`
+	xxx_hidden_Jid        string                 `protobuf:"bytes,3,opt,name=jid,proto3"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *Contact) Reset() {
 	*x = Contact{}
-	mi := &file_naniue_proto_msgTypes[8]
+	mi := &file_naniue_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -733,7 +643,7 @@ func (x *Contact) String() string {
 func (*Contact) ProtoMessage() {}
 
 func (x *Contact) ProtoReflect() protoreflect.Message {
-	mi := &file_naniue_proto_msgTypes[8]
+	mi := &file_naniue_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -751,9 +661,9 @@ func (x *Contact) GetName() string {
 	return ""
 }
 
-func (x *Contact) GetPn() string {
+func (x *Contact) GetPictureUrl() string {
 	if x != nil {
-		return x.xxx_hidden_Pn
+		return x.xxx_hidden_PictureUrl
 	}
 	return ""
 }
@@ -769,8 +679,8 @@ func (x *Contact) SetName(v string) {
 	x.xxx_hidden_Name = v
 }
 
-func (x *Contact) SetPn(v string) {
-	x.xxx_hidden_Pn = v
+func (x *Contact) SetPictureUrl(v string) {
+	x.xxx_hidden_PictureUrl = v
 }
 
 func (x *Contact) SetJid(v string) {
@@ -780,9 +690,9 @@ func (x *Contact) SetJid(v string) {
 type Contact_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Name string
-	Pn   string
-	Jid  string
+	Name       string
+	PictureUrl string
+	Jid        string
 }
 
 func (b0 Contact_builder) Build() *Contact {
@@ -790,16 +700,167 @@ func (b0 Contact_builder) Build() *Contact {
 	b, x := &b0, m0
 	_, _ = b, x
 	x.xxx_hidden_Name = b.Name
-	x.xxx_hidden_Pn = b.Pn
+	x.xxx_hidden_PictureUrl = b.PictureUrl
 	x.xxx_hidden_Jid = b.Jid
+	return m0
+}
+
+type Chat struct {
+	state                       protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Name             string                 `protobuf:"bytes,1,opt,name=name,proto3"`
+	xxx_hidden_UnreadCount      uint32                 `protobuf:"varint,2,opt,name=unread_count,json=unreadCount,proto3"`
+	xxx_hidden_LastMsgTimestamp *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_msg_timestamp,json=lastMsgTimestamp,proto3"`
+	xxx_hidden_Archived         bool                   `protobuf:"varint,4,opt,name=archived,proto3"`
+	xxx_hidden_Pinned           uint32                 `protobuf:"varint,5,opt,name=pinned,proto3"`
+	xxx_hidden_ContactJid       string                 `protobuf:"bytes,6,opt,name=contact_jid,json=contactJid,proto3"`
+	xxx_hidden_PictureUrl       string                 `protobuf:"bytes,7,opt,name=picture_url,json=pictureUrl,proto3"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
+}
+
+func (x *Chat) Reset() {
+	*x = Chat{}
+	mi := &file_naniue_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Chat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Chat) ProtoMessage() {}
+
+func (x *Chat) ProtoReflect() protoreflect.Message {
+	mi := &file_naniue_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Chat) GetName() string {
+	if x != nil {
+		return x.xxx_hidden_Name
+	}
+	return ""
+}
+
+func (x *Chat) GetUnreadCount() uint32 {
+	if x != nil {
+		return x.xxx_hidden_UnreadCount
+	}
+	return 0
+}
+
+func (x *Chat) GetLastMsgTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_LastMsgTimestamp
+	}
+	return nil
+}
+
+func (x *Chat) GetArchived() bool {
+	if x != nil {
+		return x.xxx_hidden_Archived
+	}
+	return false
+}
+
+func (x *Chat) GetPinned() uint32 {
+	if x != nil {
+		return x.xxx_hidden_Pinned
+	}
+	return 0
+}
+
+func (x *Chat) GetContactJid() string {
+	if x != nil {
+		return x.xxx_hidden_ContactJid
+	}
+	return ""
+}
+
+func (x *Chat) GetPictureUrl() string {
+	if x != nil {
+		return x.xxx_hidden_PictureUrl
+	}
+	return ""
+}
+
+func (x *Chat) SetName(v string) {
+	x.xxx_hidden_Name = v
+}
+
+func (x *Chat) SetUnreadCount(v uint32) {
+	x.xxx_hidden_UnreadCount = v
+}
+
+func (x *Chat) SetLastMsgTimestamp(v *timestamppb.Timestamp) {
+	x.xxx_hidden_LastMsgTimestamp = v
+}
+
+func (x *Chat) SetArchived(v bool) {
+	x.xxx_hidden_Archived = v
+}
+
+func (x *Chat) SetPinned(v uint32) {
+	x.xxx_hidden_Pinned = v
+}
+
+func (x *Chat) SetContactJid(v string) {
+	x.xxx_hidden_ContactJid = v
+}
+
+func (x *Chat) SetPictureUrl(v string) {
+	x.xxx_hidden_PictureUrl = v
+}
+
+func (x *Chat) HasLastMsgTimestamp() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_LastMsgTimestamp != nil
+}
+
+func (x *Chat) ClearLastMsgTimestamp() {
+	x.xxx_hidden_LastMsgTimestamp = nil
+}
+
+type Chat_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Name             string
+	UnreadCount      uint32
+	LastMsgTimestamp *timestamppb.Timestamp
+	Archived         bool
+	Pinned           uint32
+	ContactJid       string
+	PictureUrl       string
+}
+
+func (b0 Chat_builder) Build() *Chat {
+	m0 := &Chat{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Name = b.Name
+	x.xxx_hidden_UnreadCount = b.UnreadCount
+	x.xxx_hidden_LastMsgTimestamp = b.LastMsgTimestamp
+	x.xxx_hidden_Archived = b.Archived
+	x.xxx_hidden_Pinned = b.Pinned
+	x.xxx_hidden_ContactJid = b.ContactJid
+	x.xxx_hidden_PictureUrl = b.PictureUrl
 	return m0
 }
 
 type SendMessageReq struct {
 	state              protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Base    *BaseReq               `protobuf:"bytes,1,opt,name=base,proto3"`
-	xxx_hidden_ToJid   string                 `protobuf:"bytes,2,opt,name=to_jid,json=toJid,proto3"`
-	xxx_hidden_Message string                 `protobuf:"bytes,3,opt,name=message,proto3"`
+	xxx_hidden_ToJid   string                 `protobuf:"bytes,1,opt,name=to_jid,json=toJid,proto3"`
+	xxx_hidden_Message string                 `protobuf:"bytes,2,opt,name=message,proto3"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -829,13 +890,6 @@ func (x *SendMessageReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-func (x *SendMessageReq) GetBase() *BaseReq {
-	if x != nil {
-		return x.xxx_hidden_Base
-	}
-	return nil
-}
-
 func (x *SendMessageReq) GetToJid() string {
 	if x != nil {
 		return x.xxx_hidden_ToJid
@@ -850,10 +904,6 @@ func (x *SendMessageReq) GetMessage() string {
 	return ""
 }
 
-func (x *SendMessageReq) SetBase(v *BaseReq) {
-	x.xxx_hidden_Base = v
-}
-
 func (x *SendMessageReq) SetToJid(v string) {
 	x.xxx_hidden_ToJid = v
 }
@@ -862,21 +912,9 @@ func (x *SendMessageReq) SetMessage(v string) {
 	x.xxx_hidden_Message = v
 }
 
-func (x *SendMessageReq) HasBase() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_Base != nil
-}
-
-func (x *SendMessageReq) ClearBase() {
-	x.xxx_hidden_Base = nil
-}
-
 type SendMessageReq_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Base    *BaseReq
 	ToJid   string
 	Message string
 }
@@ -885,7 +923,6 @@ func (b0 SendMessageReq_builder) Build() *SendMessageReq {
 	m0 := &SendMessageReq{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.xxx_hidden_Base = b.Base
 	x.xxx_hidden_ToJid = b.ToJid
 	x.xxx_hidden_Message = b.Message
 	return m0
@@ -893,10 +930,13 @@ func (b0 SendMessageReq_builder) Build() *SendMessageReq {
 
 type Message struct {
 	state                  protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_FromJid     string                 `protobuf:"bytes,1,opt,name=from_jid,json=fromJid,proto3"`
-	xxx_hidden_ChatId      string                 `protobuf:"bytes,2,opt,name=chat_id,json=chatId,proto3"`
-	xxx_hidden_Message     string                 `protobuf:"bytes,3,opt,name=message,proto3"`
-	xxx_hidden_IsForwarded bool                   `protobuf:"varint,4,opt,name=is_forwarded,json=isForwarded,proto3"`
+	xxx_hidden_Id          string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_SenderJid   string                 `protobuf:"bytes,2,opt,name=sender_jid,json=senderJid,proto3"`
+	xxx_hidden_ChatId      string                 `protobuf:"bytes,3,opt,name=chat_id,json=chatId,proto3"`
+	xxx_hidden_Message     string                 `protobuf:"bytes,4,opt,name=message,proto3"`
+	xxx_hidden_IsForwarded bool                   `protobuf:"varint,5,opt,name=is_forwarded,json=isForwarded,proto3"`
+	xxx_hidden_FromMe      bool                   `protobuf:"varint,6,opt,name=from_me,json=fromMe,proto3"`
+	xxx_hidden_Timestamp   *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=Timestamp,proto3"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -926,9 +966,16 @@ func (x *Message) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-func (x *Message) GetFromJid() string {
+func (x *Message) GetId() string {
 	if x != nil {
-		return x.xxx_hidden_FromJid
+		return x.xxx_hidden_Id
+	}
+	return ""
+}
+
+func (x *Message) GetSenderJid() string {
+	if x != nil {
+		return x.xxx_hidden_SenderJid
 	}
 	return ""
 }
@@ -954,8 +1001,26 @@ func (x *Message) GetIsForwarded() bool {
 	return false
 }
 
-func (x *Message) SetFromJid(v string) {
-	x.xxx_hidden_FromJid = v
+func (x *Message) GetFromMe() bool {
+	if x != nil {
+		return x.xxx_hidden_FromMe
+	}
+	return false
+}
+
+func (x *Message) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_Timestamp
+	}
+	return nil
+}
+
+func (x *Message) SetId(v string) {
+	x.xxx_hidden_Id = v
+}
+
+func (x *Message) SetSenderJid(v string) {
+	x.xxx_hidden_SenderJid = v
 }
 
 func (x *Message) SetChatId(v string) {
@@ -970,23 +1035,48 @@ func (x *Message) SetIsForwarded(v bool) {
 	x.xxx_hidden_IsForwarded = v
 }
 
+func (x *Message) SetFromMe(v bool) {
+	x.xxx_hidden_FromMe = v
+}
+
+func (x *Message) SetTimestamp(v *timestamppb.Timestamp) {
+	x.xxx_hidden_Timestamp = v
+}
+
+func (x *Message) HasTimestamp() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Timestamp != nil
+}
+
+func (x *Message) ClearTimestamp() {
+	x.xxx_hidden_Timestamp = nil
+}
+
 type Message_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	FromJid     string
+	Id          string
+	SenderJid   string
 	ChatId      string
 	Message     string
 	IsForwarded bool
+	FromMe      bool
+	Timestamp   *timestamppb.Timestamp
 }
 
 func (b0 Message_builder) Build() *Message {
 	m0 := &Message{}
 	b, x := &b0, m0
 	_, _ = b, x
-	x.xxx_hidden_FromJid = b.FromJid
+	x.xxx_hidden_Id = b.Id
+	x.xxx_hidden_SenderJid = b.SenderJid
 	x.xxx_hidden_ChatId = b.ChatId
 	x.xxx_hidden_Message = b.Message
 	x.xxx_hidden_IsForwarded = b.IsForwarded
+	x.xxx_hidden_FromMe = b.FromMe
+	x.xxx_hidden_Timestamp = b.Timestamp
 	return m0
 }
 
@@ -994,15 +1084,12 @@ var File_naniue_proto protoreflect.FileDescriptor
 
 const file_naniue_proto_rawDesc = "" +
 	"\n" +
-	"\fnaniue.proto\x12\x06naniue\"\a\n" +
-	"\x05Empty\"\"\n" +
-	"\aBaseReq\x12\x17\n" +
-	"\auser_pn\x18\x01 \x01(\tR\x06userPn\"7\n" +
-	"\bContacts\x12+\n" +
-	"\bcontacts\x18\x01 \x03(\v2\x0f.naniue.ContactR\bcontacts\"N\n" +
-	"\rGetContactReq\x12#\n" +
-	"\x04base\x18\x01 \x01(\v2\x0f.naniue.BaseReqR\x04base\x12\x18\n" +
-	"\acontact\x18\x02 \x01(\tR\acontact\"H\n" +
+	"\fnaniue.proto\x12\x06naniue\x1a\x1fgoogle/protobuf/timestamp.proto\"\a\n" +
+	"\x05Empty\"+\n" +
+	"\x05Chats\x12\"\n" +
+	"\x05chats\x18\x01 \x03(\v2\f.naniue.ChatR\x05chats\"\x19\n" +
+	"\aGetById\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"H\n" +
 	"\bAuthCode\x12&\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x12.naniue.AuthMethodR\x04type\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value\"!\n" +
@@ -1012,72 +1099,93 @@ const file_naniue_proto_rawDesc = "" +
 	"\x04code\x18\x01 \x01(\v2\x10.naniue.AuthCodeH\x00R\x04code\x12%\n" +
 	"\x05error\x18\x02 \x01(\v2\r.naniue.ErrorH\x00R\x05error\x12%\n" +
 	"\x05alive\x18\x03 \x01(\v2\r.naniue.EmptyH\x00R\x05aliveB\b\n" +
-	"\x06result\"/\n" +
-	"\bLoginReq\x12#\n" +
-	"\x04base\x18\x01 \x01(\v2\x0f.naniue.BaseReqR\x04base\"?\n" +
+	"\x06result\"7\n" +
+	"\bContacts\x12+\n" +
+	"\bcontacts\x18\x01 \x03(\v2\x0f.naniue.ContactR\bcontacts\"P\n" +
 	"\aContact\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x0e\n" +
-	"\x02pn\x18\x02 \x01(\tR\x02pn\x12\x10\n" +
-	"\x03jid\x18\x03 \x01(\tR\x03jid\"f\n" +
-	"\x0eSendMessageReq\x12#\n" +
-	"\x04base\x18\x01 \x01(\v2\x0f.naniue.BaseReqR\x04base\x12\x15\n" +
-	"\x06to_jid\x18\x02 \x01(\tR\x05toJid\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\"z\n" +
-	"\aMessage\x12\x19\n" +
-	"\bfrom_jid\x18\x01 \x01(\tR\afromJid\x12\x17\n" +
-	"\achat_id\x18\x02 \x01(\tR\x06chatId\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\x12!\n" +
-	"\fis_forwarded\x18\x04 \x01(\bR\visForwarded*\x19\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1f\n" +
+	"\vpicture_url\x18\x02 \x01(\tR\n" +
+	"pictureUrl\x12\x10\n" +
+	"\x03jid\x18\x03 \x01(\tR\x03jid\"\xfd\x01\n" +
+	"\x04Chat\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12!\n" +
+	"\funread_count\x18\x02 \x01(\rR\vunreadCount\x12H\n" +
+	"\x12last_msg_timestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastMsgTimestamp\x12\x1a\n" +
+	"\barchived\x18\x04 \x01(\bR\barchived\x12\x16\n" +
+	"\x06pinned\x18\x05 \x01(\rR\x06pinned\x12\x1f\n" +
+	"\vcontact_jid\x18\x06 \x01(\tR\n" +
+	"contactJid\x12\x1f\n" +
+	"\vpicture_url\x18\a \x01(\tR\n" +
+	"pictureUrl\"A\n" +
+	"\x0eSendMessageReq\x12\x15\n" +
+	"\x06to_jid\x18\x01 \x01(\tR\x05toJid\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xe1\x01\n" +
+	"\aMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"sender_jid\x18\x02 \x01(\tR\tsenderJid\x12\x17\n" +
+	"\achat_id\x18\x03 \x01(\tR\x06chatId\x12\x18\n" +
+	"\amessage\x18\x04 \x01(\tR\amessage\x12!\n" +
+	"\fis_forwarded\x18\x05 \x01(\bR\visForwarded\x12\x17\n" +
+	"\afrom_me\x18\x06 \x01(\bR\x06fromMe\x128\n" +
+	"\tTimestamp\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tTimestamp*\x19\n" +
 	"\n" +
 	"AuthMethod\x12\v\n" +
-	"\aQR_CODE\x10\x002\x89\x02\n" +
-	"\x03Wpp\x12+\n" +
-	"\x05Login\x12\x10.naniue.LoginReq\x1a\x10.naniue.LoginRes\x120\n" +
-	"\vGetContacts\x12\x0f.naniue.BaseReq\x1a\x10.naniue.Contacts\x124\n" +
+	"\aQR_CODE\x10\x002\xd0\x02\n" +
+	"\x03Wpp\x12(\n" +
+	"\x05Login\x12\r.naniue.Empty\x1a\x10.naniue.LoginRes\x12(\n" +
+	"\bGetChats\x12\r.naniue.Empty\x1a\r.naniue.Chats\x12(\n" +
+	"\aGetChat\x12\x0f.naniue.GetById\x1a\f.naniue.Chat\x12.\n" +
+	"\vGetContacts\x12\r.naniue.Empty\x1a\x10.naniue.Contacts\x12.\n" +
 	"\n" +
-	"GetContact\x12\x15.naniue.GetContactReq\x1a\x0f.naniue.Contact\x124\n" +
-	"\vSendMessage\x12\x16.naniue.SendMessageReq\x1a\r.naniue.Empty\x127\n" +
-	"\x11SubscribeMessages\x12\x0f.naniue.BaseReq\x1a\x0f.naniue.Message0\x01Ba\n" +
+	"GetContact\x12\x0f.naniue.GetById\x1a\x0f.naniue.Contact\x124\n" +
+	"\vSendMessage\x12\x16.naniue.SendMessageReq\x1a\r.naniue.Empty\x125\n" +
+	"\x11SubscribeMessages\x12\r.naniue.Empty\x1a\x0f.naniue.Message0\x01Ba\n" +
 	"\n" +
 	"com.naniueB\vNaniueProtoP\x01Z\x0enaniue-srv/gen\xa2\x02\x03NXX\xaa\x02\x06Naniue\xca\x02\x06Naniue\xe2\x02\x12Naniue\\GPBMetadata\xea\x02\x06Naniueb\x06proto3"
 
 var file_naniue_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_naniue_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_naniue_proto_goTypes = []any{
-	(AuthMethod)(0),        // 0: naniue.AuthMethod
-	(*Empty)(nil),          // 1: naniue.Empty
-	(*BaseReq)(nil),        // 2: naniue.BaseReq
-	(*Contacts)(nil),       // 3: naniue.Contacts
-	(*GetContactReq)(nil),  // 4: naniue.GetContactReq
-	(*AuthCode)(nil),       // 5: naniue.AuthCode
-	(*Error)(nil),          // 6: naniue.Error
-	(*LoginRes)(nil),       // 7: naniue.LoginRes
-	(*LoginReq)(nil),       // 8: naniue.LoginReq
-	(*Contact)(nil),        // 9: naniue.Contact
-	(*SendMessageReq)(nil), // 10: naniue.SendMessageReq
-	(*Message)(nil),        // 11: naniue.Message
+	(AuthMethod)(0),               // 0: naniue.AuthMethod
+	(*Empty)(nil),                 // 1: naniue.Empty
+	(*Chats)(nil),                 // 2: naniue.Chats
+	(*GetById)(nil),               // 3: naniue.GetById
+	(*AuthCode)(nil),              // 4: naniue.AuthCode
+	(*Error)(nil),                 // 5: naniue.Error
+	(*LoginRes)(nil),              // 6: naniue.LoginRes
+	(*Contacts)(nil),              // 7: naniue.Contacts
+	(*Contact)(nil),               // 8: naniue.Contact
+	(*Chat)(nil),                  // 9: naniue.Chat
+	(*SendMessageReq)(nil),        // 10: naniue.SendMessageReq
+	(*Message)(nil),               // 11: naniue.Message
+	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
 }
 var file_naniue_proto_depIdxs = []int32{
-	9,  // 0: naniue.Contacts.contacts:type_name -> naniue.Contact
-	2,  // 1: naniue.GetContactReq.base:type_name -> naniue.BaseReq
-	0,  // 2: naniue.AuthCode.type:type_name -> naniue.AuthMethod
-	5,  // 3: naniue.LoginRes.code:type_name -> naniue.AuthCode
-	6,  // 4: naniue.LoginRes.error:type_name -> naniue.Error
-	1,  // 5: naniue.LoginRes.alive:type_name -> naniue.Empty
-	2,  // 6: naniue.LoginReq.base:type_name -> naniue.BaseReq
-	2,  // 7: naniue.SendMessageReq.base:type_name -> naniue.BaseReq
-	8,  // 8: naniue.Wpp.Login:input_type -> naniue.LoginReq
-	2,  // 9: naniue.Wpp.GetContacts:input_type -> naniue.BaseReq
-	4,  // 10: naniue.Wpp.GetContact:input_type -> naniue.GetContactReq
-	10, // 11: naniue.Wpp.SendMessage:input_type -> naniue.SendMessageReq
-	2,  // 12: naniue.Wpp.SubscribeMessages:input_type -> naniue.BaseReq
-	7,  // 13: naniue.Wpp.Login:output_type -> naniue.LoginRes
-	3,  // 14: naniue.Wpp.GetContacts:output_type -> naniue.Contacts
-	9,  // 15: naniue.Wpp.GetContact:output_type -> naniue.Contact
-	1,  // 16: naniue.Wpp.SendMessage:output_type -> naniue.Empty
-	11, // 17: naniue.Wpp.SubscribeMessages:output_type -> naniue.Message
-	13, // [13:18] is the sub-list for method output_type
-	8,  // [8:13] is the sub-list for method input_type
+	9,  // 0: naniue.Chats.chats:type_name -> naniue.Chat
+	0,  // 1: naniue.AuthCode.type:type_name -> naniue.AuthMethod
+	4,  // 2: naniue.LoginRes.code:type_name -> naniue.AuthCode
+	5,  // 3: naniue.LoginRes.error:type_name -> naniue.Error
+	1,  // 4: naniue.LoginRes.alive:type_name -> naniue.Empty
+	8,  // 5: naniue.Contacts.contacts:type_name -> naniue.Contact
+	12, // 6: naniue.Chat.last_msg_timestamp:type_name -> google.protobuf.Timestamp
+	12, // 7: naniue.Message.Timestamp:type_name -> google.protobuf.Timestamp
+	1,  // 8: naniue.Wpp.Login:input_type -> naniue.Empty
+	1,  // 9: naniue.Wpp.GetChats:input_type -> naniue.Empty
+	3,  // 10: naniue.Wpp.GetChat:input_type -> naniue.GetById
+	1,  // 11: naniue.Wpp.GetContacts:input_type -> naniue.Empty
+	3,  // 12: naniue.Wpp.GetContact:input_type -> naniue.GetById
+	10, // 13: naniue.Wpp.SendMessage:input_type -> naniue.SendMessageReq
+	1,  // 14: naniue.Wpp.SubscribeMessages:input_type -> naniue.Empty
+	6,  // 15: naniue.Wpp.Login:output_type -> naniue.LoginRes
+	2,  // 16: naniue.Wpp.GetChats:output_type -> naniue.Chats
+	9,  // 17: naniue.Wpp.GetChat:output_type -> naniue.Chat
+	7,  // 18: naniue.Wpp.GetContacts:output_type -> naniue.Contacts
+	8,  // 19: naniue.Wpp.GetContact:output_type -> naniue.Contact
+	1,  // 20: naniue.Wpp.SendMessage:output_type -> naniue.Empty
+	11, // 21: naniue.Wpp.SubscribeMessages:output_type -> naniue.Message
+	15, // [15:22] is the sub-list for method output_type
+	8,  // [8:15] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
 	8,  // [8:8] is the sub-list for extension extendee
 	0,  // [0:8] is the sub-list for field type_name
@@ -1088,7 +1196,7 @@ func file_naniue_proto_init() {
 	if File_naniue_proto != nil {
 		return
 	}
-	file_naniue_proto_msgTypes[6].OneofWrappers = []any{
+	file_naniue_proto_msgTypes[5].OneofWrappers = []any{
 		(*loginRes_Code)(nil),
 		(*loginRes_Error)(nil),
 		(*loginRes_Alive)(nil),

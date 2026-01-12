@@ -24,24 +24,28 @@ export default function Repl() {
 		<div className="flex flex-row gap-1 m-2">
 			<Button
 				action={async () => {
-					const r = await client.login({ base: { userPn: "" } }).response;
-					console.log(r);
+					const login = await client.login({});
+					console.log(login);
+					if (login.result.case != "alive") {
+						return
+					}
+					const r = client.subscribeMessages({});
+					console.log("Subscribed! Listening for messages!");
+					for await (const msg of r) {
+						console.log(msg);
+					}
 				}}
 			>
 				Login
 			</Button>
 
-			<Button
-				action={async () => {
-					const r = client.subscribeMessages({ userPn: "" });
-					console.log("Subscribed! Listening for messages!");
-					for await (const msg of r.responses) {
-						console.log(msg);
-					}
-				}}
-			>
-				Subscribe
-			</Button>
-		</div>
+		<Button action={async() => {
+			console.log('requesting contacts...');
+			console.log('contacts', await client.getContacts({}))
+		}}>
+			Contacts
+		</Button>
+
+			</div>
 	);
 }

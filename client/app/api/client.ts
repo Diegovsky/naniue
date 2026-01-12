@@ -1,14 +1,14 @@
 import type { Chat, Contact, Profile } from "types";
-import { WppClient } from "./pb/naniue-client";
-import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
+import { Wpp } from "./gen/naniue_pb";
+import { createClient, type Client as ConnectClient } from "@connectrpc/connect";
+import { createConnectTransport } from "@connectrpc/connect-web";
 
 export class Client {
-	wpp: WppClient;
+	wpp: ConnectClient<typeof Wpp>;
 
 	constructor() {
-		this.wpp = new WppClient(
-			new GrpcWebFetchTransport({
-				format: "binary",
+		this.wpp = createClient(Wpp,
+			createConnectTransport({
 				baseUrl: "http://localhost:8000/",
 			}),
 		);
@@ -18,8 +18,18 @@ export class Client {
 		return contacts;
 	}
 
+	async getContact(id: string): Promise<Contact|undefined> {
+		const contacts = await this.getContacts()
+		return contacts.find((i) => i.id === id)
+	}
+
 	async getChats(): Promise<Chat[]> {
 		return chats;
+	}
+
+	async getChat(id: string): Promise<Chat|undefined> {
+		const chats = await this.getChats()
+		return chats.find((i) => i.id === id)
 	}
 
 	async getProfile(): Promise<Profile> {
